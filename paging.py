@@ -7,14 +7,20 @@ from random import randint
 
 def FIFO(size, pages):
     print("FIFO")
+    no_faults = 0
+    return no_faults
 
 
 def LRU(size, pages):
-    print("FIFO")
+    print("LRU")
+    no_faults = 0
+    return no_faults
 
 
 def OPT(size, pages):
-    print("FIFO")
+    print("OPT")
+    no_faults = 0
+    return no_faults
 
 
 def main():
