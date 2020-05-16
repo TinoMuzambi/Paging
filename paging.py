@@ -2,6 +2,7 @@
 # MZMTIN002
 
 import sys
+from random import randint
 
 
 def FIFO(size, pages):
@@ -17,8 +18,11 @@ def OPT(size, pages):
 
 
 def main():
-    # ...TODO...
     size = int(sys.argv[1])
+    pages = ""
+    for i in range(7):
+        pages += str(randint(0, 9))
+    print(pages)
     print("FIFO", FIFO(size, pages), "page faults.")
     print("LRU", LRU(size, pages), "page faults.")
     print("OPT", OPT(size, pages), "page faults.")
