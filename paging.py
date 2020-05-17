@@ -8,6 +8,7 @@ from random import randint
 def FIFO(size, pages):
     no_faults = 0
     memory = {}
+    added = []
     for i in range(size):
         memory[i + 1] = "-"
     for i in pages:
@@ -16,9 +17,12 @@ def FIFO(size, pages):
                 break
             elif memory[j] == '-':
                 memory[j] = i
+                added.append(j)
                 break
-            if j == 3:
+            if j == size:
                 no_faults += 1
+                memory[added[no_faults - 1]] = i
+                added.append(added[no_faults - 1])
 
     print(memory)
     return no_faults
@@ -36,7 +40,7 @@ def OPT(size, pages):
 
 def main():
     size = int(sys.argv[1])
-    pages = "23421375"
+    pages = "85625354"
     # pages = ""
     # for i in range(8):
     #     pages += str(randint(0, 9))
