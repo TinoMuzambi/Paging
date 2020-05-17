@@ -6,28 +6,40 @@ from random import randint
 
 
 def FIFO(size, pages):
-    print("FIFO")
     no_faults = 0
+    memory = {}
+    for i in range(size):
+        memory[i + 1] = "-"
+    for i in pages:
+        for j in range(1, size + 1):
+            if memory[j] == i:
+                break
+            elif memory[j] == '-':
+                memory[j] = i
+                break
+            if j == 3:
+                no_faults += 1
+
+    print(memory)
     return no_faults
 
 
 def LRU(size, pages):
-    print("LRU")
     no_faults = 0
     return no_faults
 
 
 def OPT(size, pages):
-    print("OPT")
     no_faults = 0
     return no_faults
 
 
 def main():
     size = int(sys.argv[1])
-    pages = ""
-    for i in range(7):
-        pages += str(randint(0, 9))
+    pages = "23421375"
+    # pages = ""
+    # for i in range(8):
+    #     pages += str(randint(0, 9))
     print(pages)
     print("FIFO", FIFO(size, pages), "page faults.")
     print("LRU", LRU(size, pages), "page faults.")
