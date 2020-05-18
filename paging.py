@@ -35,11 +35,14 @@ def LRU(size, pages):
     no_faults = 0
     memory = {}
     indexes = {}
+    curr_max = 0
     for i in range(size):
         memory[i + 1] = "-"
     for i in pages:
         for j in range(1, size + 1):
-            if memory[j] == i:
+            if no_faults > 0 and memory[j] == i:
+                curr_max += 1
+                indexes[memory[j]] = curr_max
                 break
             elif memory[j] == '-':
                 memory[j] = i
@@ -53,9 +56,14 @@ def LRU(size, pages):
                     if indexes[memory[k]] < min_el:
                         min_el = indexes[memory[k]]
                         curr_key = k
-                indexes[i] = indexes[memory[curr_key]] + 1
+                for k in range(1, len(memory) + 1):
+                    if indexes[memory[k]] > curr_max:
+                        curr_max = indexes[memory[k]]
+                curr_max += 1
+                indexes[i] = curr_max
                 del indexes[memory[curr_key]]
                 memory[curr_key] = i
+                no_faults += 1
 
     print(memory)
     return no_faults
@@ -68,8 +76,8 @@ def OPT(size, pages):
 
 def main():
     size = int(sys.argv[1])
-    pages = "701203042303120"
-    # pages = "85625354"
+    # pages = "701203042303120"
+    pages = "85625354"
     # pages = ""
     # for i in range(8):
     #     pages += str(randint(0, 9))
