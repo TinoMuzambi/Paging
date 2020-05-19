@@ -84,21 +84,26 @@ def OPT(size, pages):
                 no_faults += 1
                 break
             if j == size:
+                processed = []
                 indexes = {}
                 for k in range(len(memory), 0, -1):
                     indexes[memory[k]] = -1
+                curr_key = -1
                 for k in range(i + 1, len(pages)):
                     for m in range(1, len(memory) + 1):
                         if pages[k] == memory[m]:
-                            indexes[pages[k]] += 1
-                curr_min = -1
+                            if not pages[k] in processed:
+                                curr_key += 1
+                                indexes[pages[k]] = curr_key
+                                processed.append(pages[k])
+                curr_max = -1
                 for k in range(1, len(indexes) + 1):
                     if indexes[memory[k]] == -1:
-                        curr_min = k
+                        curr_max = k
                         break
-                    elif indexes[memory[k]] > curr_min:
-                        curr_min = k
-                memory[curr_min] = pages[i]
+                    elif indexes[memory[k]] > curr_max:
+                        curr_max = k
+                memory[curr_max] = pages[i]
                 no_faults += 1
 
     print(memory)
@@ -107,12 +112,12 @@ def OPT(size, pages):
 
 def main():
     size = int(sys.argv[1])
-    pages = "701203042303120"
+    # pages = "701203042303212017"
     # pages = "85625354"
     # pages = "23421375"
-    # pages = ""
-    # for i in range(8):
-    #     pages += str(randint(0, 9))
+    pages = ""
+    for i in range(8):
+        pages += str(randint(0, 9))
     print(pages)
     print("FIFO", FIFO(size, pages), "page faults.")
     print("LRU", LRU(size, pages), "page faults.")
