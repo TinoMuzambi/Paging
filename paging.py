@@ -75,22 +75,40 @@ def OPT(size, pages):
     memory = {}
     for i in range(size):
         memory[i + 1] = "-"
-    for i in pages:
+    for i in range(len(pages)):
         for j in range(1, size + 1):
-            if no_faults > 0 and memory[j] == i:
+            if no_faults > 0 and memory[j] == pages[i]:
                 break
             elif memory[j] == '-':
-                memory[j] = i
+                memory[j] = pages[i]
                 no_faults += 1
                 break
+            if j == size:
+                indexes = {}
+                for k in range(len(memory), 0, -1):
+                    indexes[memory[k]] = -1
+                for k in range(i + 1, len(pages)):
+                    for m in range(1, len(memory) + 1):
+                        if pages[k] == memory[m]:
+                            indexes[pages[k]] += 1
+                curr_min = -1
+                for k in range(1, len(indexes) + 1):
+                    if indexes[memory[k]] == -1:
+                        curr_min = k
+                        break
+                    elif indexes[memory[k]] > curr_min:
+                        curr_min = k
+                memory[curr_min] = pages[i]
+                no_faults += 1
+
     print(memory)
     return no_faults
 
 
 def main():
     size = int(sys.argv[1])
-    # pages = "701203042303120"
-    pages = "85625354"
+    pages = "701203042303120"
+    # pages = "85625354"
     # pages = "23421375"
     # pages = ""
     # for i in range(8):
