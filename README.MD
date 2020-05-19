@@ -3,4 +3,4 @@
 
 Usage:
 
-python paging.py [number of pages]
+python paging.py [size of page frame]
