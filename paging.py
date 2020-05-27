@@ -111,15 +111,20 @@ def OPT(size, pages):
 def main():
     size = int(sys.argv[1])
     pages = ""
-    for i in range(8):      # Randomly generate pages to be requested.
+    try:
+        page_length = eval(sys.argv[2])
+    except IndexError:
+        page_length = 8
+    for i in range(page_length):      # Randomly generate pages to be requested.
         pages += str(randint(0, 9))
+    print(pages)
     print("FIFO", FIFO(size, pages), "page faults.")
     print("LRU", LRU(size, pages), "page faults.")
     print("OPT", OPT(size, pages), "page faults.")
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print("Usage: python paging.py [number of pages]")
     else:
         main()
