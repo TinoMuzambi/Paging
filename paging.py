@@ -117,7 +117,6 @@ def main():
         page_length = 8
     for i in range(page_length):      # Randomly generate pages to be requested.
         pages += str(randint(0, 9))
-    print(pages)
     print("FIFO", FIFO(size, pages), "page faults.")
     print("LRU", LRU(size, pages), "page faults.")
     print("OPT", OPT(size, pages), "page faults.")
